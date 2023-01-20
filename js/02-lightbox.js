@@ -24,6 +24,4 @@ function createGallary(galleryItems) {
   );
   }
 
-new SimpleLightbox('.gallery a', {
-	captionDelay: 250, captionsData:"alt"
-})
+new SimpleLightbox('.gallery a', {captionDelay:250, captionsData:"alt"})

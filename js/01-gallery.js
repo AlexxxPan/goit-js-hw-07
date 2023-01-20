@@ -30,23 +30,28 @@ console.log(galleryItems);
 
 function imageContainerClick(event) {
   event.preventDefault();
-  const isImageEl = event.target.classList.contains("gallery__image");
+  const isImageEl = event.target.nodeName === "IMG";
   if (!isImageEl) {
     return;
   }
 
   const selectedImage = event.target.getAttribute("data-source");
 
-  const instance = basicLightbox.create(`
-    <img src="${selectedImage}" width="800" height="600">
-`);
- 
+  const instance = basicLightbox.create(
+    `
+    <img src="${selectedImage}" width="800" height="600">`,
+    {
+      onShow: (instance) => { document.addEventListener("keydown", closeEsc); },
+
+      onClose: (instance) => { document.removeEventListener("keydown", closeEsc); }
+    }
+  );
+
   instance.show();
 
-  document.onkeydown = function (event) {
+  function closeEsc(event) {
     if (event.code == "Escape") {
       instance.close();
     }
   };
 }
-
